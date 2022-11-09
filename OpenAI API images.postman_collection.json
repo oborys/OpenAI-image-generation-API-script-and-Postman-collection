@@ -1,0 +1,424 @@
+{
+	"info": {
+		"_postman_id": "63e52148-2288-4d14-8e0b-c58feb4002ee",
+		"name": "OpenAI API images",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "2236597"
+	},
+	"item": [
+		{
+			"name": "Image generations [URL]",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{OPENAI_API_KEY}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"prompt\": \"{{prompt}}\",\n    \"n\": {{numberOfImages}},\n    \"size\": \"{{size}}\"\n  }"
+				},
+				"url": {
+					"raw": "https://api.openai.com/v1/images/generations",
+					"protocol": "https",
+					"host": [
+						"api",
+						"openai",
+						"com"
+					],
+					"path": [
+						"v1",
+						"images",
+						"generations"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Image generations [IMG]",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var data = JSON.parse(responseBody)",
+							"",
+							"const base64ImgData = `data:image/png;base64, ` + data.data[0].b64_json",
+							"",
+							"const template = `",
+							"<img src=\"{{img}}\">",
+							"`",
+							"",
+							"pm.visualizer.set(template, {img: base64ImgData})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{OPENAI_API_KEY}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"prompt\": \"{{prompt}}\",\n    \"n\": {{numberOfImages}},\n    \"size\": \"{{size}}\",\n    \"response_format\": \"b64_json\"\n}"
+				},
+				"url": {
+					"raw": "https://api.openai.com/v1/images/generations",
+					"protocol": "https",
+					"host": [
+						"api",
+						"openai",
+						"com"
+					],
+					"path": [
+						"v1",
+						"images",
+						"generations"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create image edit [URL]",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{OPENAI_API_KEY}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "image",
+							"type": "file",
+							"src": []
+						},
+						{
+							"key": "mask",
+							"type": "file",
+							"src": []
+						},
+						{
+							"key": "prompt",
+							"value": "{{prompt}}",
+							"type": "text"
+						},
+						{
+							"key": "n",
+							"value": "{{numberOfImages}}",
+							"type": "text"
+						},
+						{
+							"key": "size",
+							"value": "{{size}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://api.openai.com/v1/images/edits",
+					"protocol": "https",
+					"host": [
+						"api",
+						"openai",
+						"com"
+					],
+					"path": [
+						"v1",
+						"images",
+						"edits"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create image edit [IMG]",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var data = JSON.parse(responseBody)",
+							"",
+							"const base64ImgData = `data:image/png;base64, ` + data.data[0].b64_json",
+							"",
+							"const template = `",
+							"<img src=\"{{img}}\">",
+							"`",
+							"",
+							"pm.visualizer.set(template, {img: base64ImgData})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{OPENAI_API_KEY}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "image",
+							"type": "file",
+							"src": []
+						},
+						{
+							"key": "mask",
+							"type": "file",
+							"src": []
+						},
+						{
+							"key": "prompt",
+							"value": "{{prompt}}",
+							"type": "text"
+						},
+						{
+							"key": "n",
+							"value": "{{numberOfImages}}",
+							"type": "text"
+						},
+						{
+							"key": "size",
+							"value": "{{size}}",
+							"type": "text"
+						},
+						{
+							"key": "response_format",
+							"value": "b64_json",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://api.openai.com/v1/images/edits",
+					"protocol": "https",
+					"host": [
+						"api",
+						"openai",
+						"com"
+					],
+					"path": [
+						"v1",
+						"images",
+						"edits"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create image variation [URL]",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{OPENAI_API_KEY}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "image",
+							"type": "file",
+							"src": []
+						},
+						{
+							"key": "n",
+							"value": "{{numberOfImages}}",
+							"type": "text"
+						},
+						{
+							"key": "size",
+							"value": "{{size}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://api.openai.com/v1/images/variations",
+					"protocol": "https",
+					"host": [
+						"api",
+						"openai",
+						"com"
+					],
+					"path": [
+						"v1",
+						"images",
+						"variations"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create image variation [IMG]",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var data = JSON.parse(responseBody)",
+							"",
+							"const base64ImgData = `data:image/png;base64, ` + data.data[0].b64_json",
+							"",
+							"const template = `",
+							"<img src=\"{{img}}\">",
+							"`",
+							"",
+							"pm.visualizer.set(template, {img: base64ImgData})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{OPENAI_API_KEY}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "image",
+							"type": "file",
+							"src": []
+						},
+						{
+							"key": "n",
+							"value": "{{numberOfImages}}",
+							"type": "text"
+						},
+						{
+							"key": "size",
+							"value": "{{size}}",
+							"type": "text"
+						},
+						{
+							"key": "response_format",
+							"value": "b64_json",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://api.openai.com/v1/images/variations",
+					"protocol": "https",
+					"host": [
+						"api",
+						"openai",
+						"com"
+					],
+					"path": [
+						"v1",
+						"images",
+						"variations"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
